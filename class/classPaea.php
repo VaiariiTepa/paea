@@ -48,8 +48,9 @@ class paea
     function getNewDemande(){
         global $mysqli;
         $t_demande = array();
-        $request = "SELECT *, s.name as 'nom_service',d.date as 'date_demande' ,d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid";
 
+        $request = "SELECT *, s.name as 'nom_service',d.date as 'date_demande' ,d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid";
+        
         $result = $mysqli->query($request);
         
         foreach ($result as $row){
@@ -93,18 +94,21 @@ class paea
      * @param [type] $prenom
      * @param [type] $birthday
      * @param [type] $tel
+     * @param [type] $mail
      * @param [type] $adresse
-     * @param [type] $service
-     * @param [type] $remarque
+     * @param [type] $quartier
+     * @param [type] $servitude
+     * @param [type] $lot
      * 
      */
-    function newHabitant($nom,$prenom,$birthday,$tel,$adresse)
+    function newHabitant($nom,$prenom,$birthday,$tel,$mail,$adresse,$quartier,$servitude,$lot,)
     {
         global $mysqli;
         
-        $request = "INSERT INTO `habitants`(`nom`, `prenom`, `birthday`, `tel`, `adresse`)"; 
+        $request = "INSERT INTO `habitants`(`nom`, `prenom`, `birthday`, `tel`, `mail`, `adresse`, `quartier`, `servitude`, `lot`)";
         $request.= "VALUES";
-        $request.= "('".$nom."','".$prenom."','".$birthday."','".$tel."','".$adresse."')";
+        $request.= "('".$nom."','".$prenom."','".$birthday."','".$tel."','".$mail."','".$adresse."','".$quartier."','".$servitude."','".$lot."')";
+        
         $mysqli->query($request);
         
     }
@@ -118,19 +122,20 @@ class paea
      * @param [type] $traitement
      * @return $res
      */
-    function newDemande($LastHabitantId,$serviceId,$remarque,$traitement)
+    function newDemande($LastHabitantId,$serviceId,$remarque,$traitement,$super_admin)
     {
         global $mysqli;
         
         
-        $request = "INSERT INTO `demandes`(`fk_habitant_id`, `fk_service_id`, `remarque`, `traitement_id`)"; 
+        $request = "INSERT INTO `demandes`(`fk_habitant_id`, `fk_service_id`, `remarque`, `traitement_id`,`super_admin`)"; 
         $request.= " VALUES";
         $request.= " ('".$LastHabitantId."'";
         $request.= ",'".$serviceId."'";
         $request.= ",'".$remarque."'";
-        $request.= ",'".$traitement."')";
+        $request.= ",'".$traitement."'";
+        $request.= ",'".$super_admin."')";
         $result = $mysqli->query($request);
-        
+        var_dump($request);
         if($result == false){
             $res = "ERROR";
         }else{
@@ -192,11 +197,11 @@ class paea
      * @param [type] $rowid_demande
      * @return void
      */
-    function attenteDemande($rowid_demande)
+    function attenteDemande($rowid_demande,$note)
     {
         global $mysqli;
         
-        $requete = 'UPDATE demandes SET traitement_id=2 WHERE rowid=' . $rowid_demande;
+        $requete = 'UPDATE demandes SET traitement_id=2 , note_attente="'.$note.'"  WHERE rowid=' . $rowid_demande;
         $result = $mysqli->query($requete);
 
         
@@ -208,11 +213,12 @@ class paea
      * @param [type] $rowid_demande
      * @return void
      */
-    function terminerDemande($rowid_demande)
+    function terminerDemande($rowid_demande,$statut_demande,$note)
     {
         global $mysqli;
         
-        $requete = 'UPDATE demandes SET traitement_id=3 WHERE rowid=' . $rowid_demande;
+        $requete = 'UPDATE demandes SET traitement_id=3 ,statut_demande='.$statut_demande.' , note_statut="'.$note.'"  WHERE rowid=' . $rowid_demande;
+        
         $result = $mysqli->query($requete);
         
     }
