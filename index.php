@@ -95,6 +95,7 @@
                                     </h6>
                                     <p class="card-text">
                                         <form method="post" action="index.php">
+                                            
                                             <!-- nom prenom -->
                                             <div class="row mb-2">
                                                 <div class="col-6">
@@ -104,6 +105,7 @@
                                                     <input type="text" name="prenom" class="form-control" placeholder="Prenom">
                                                 </div>
                                             </div>
+
                                             <!-- naissance + lieu -->
                                             <div class="row mb-3">
                                                 <div class="col-6">

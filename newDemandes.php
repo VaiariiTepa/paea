@@ -26,7 +26,7 @@
                                         print 'service';
                                     print '</th>';
                                     print '<th scope="col">';
-                                        print 'remarque';
+                                        print 'Obj. demande';
                                     print '</th>';
                                     print '<th scope="col">';
                                         print 'date demande';

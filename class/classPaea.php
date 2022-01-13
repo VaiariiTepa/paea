@@ -135,7 +135,7 @@ class paea
         $request.= ",'".$traitement."'";
         $request.= ",'".$super_admin."')";
         $result = $mysqli->query($request);
-        var_dump($request);
+        // var_dump($request);
         if($result == false){
             $res = "ERROR";
         }else{

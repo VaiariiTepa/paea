@@ -14,7 +14,6 @@
     $numAdmin = count($listAdministration);
     $NumNotTreatAdministration = count($listNotTreatAdministration);
     $numFinishAdmin = count($listFinishAdministration);
-    // $numInProgress = count($listInProgressAdministration);
     $numWaitingAdmin = count($listWaitingAdministration);
 
     // Education = 1
@@ -27,7 +26,6 @@
     $numEducation = count($listEducation);
     $NumNotTreatEducation = count($listNotTreatEducation);
     $numFinishEducation = count($listFinishEducation);
-    // $numInProgressEducation = count($listInProgressEducation);
     $numWaitingEducation = count($listWaitingEducation);
 
     // Voirie = 2
@@ -40,7 +38,6 @@
     $numVoirie = count($listVoirie);
     $NumNotTreatVoirie = count($listNotTreatVoirie);
     $numFinishVoirie = count($listFinishVoirie);
-    // $numInProgressVoirie = count($listInProgressVoirie);
     $numWaitingVoirie = count($listWaitingVoirie);
 
     // Police = 3
@@ -53,7 +50,6 @@
     $numPolice = count($listPolice);
     $NumNotTreatPolice = count($listNotTreatPolice);
     $numFinishPolice = count($listFinishPolice);
-    // $numInProgressPolice = count($listInProgressPolice);
     $numWaitingPolice = count($listWaitingPolice);
 
     // Pompier = 4
@@ -66,7 +62,6 @@
     $numPompier = count($listPompier);
     $NumNotTreatPompier = count($listNotTreatPompier);
     $numFinishPompier = count($listFinishPompier);
-    // $numInProgressPompier = count($listInProgressPompier);
     $numWaitingPompier = count($listWaitingPompier);
 
     // Emplois = 5
@@ -79,7 +74,6 @@
     $numEmploi = count($listEmploi);
     $NumNotTreatEmploi = count($listNotTreatEmploi);
     $numFinishEmploi = count($listFinishEmploi);
-    // $numInProgressEmploi = count($listInProgressEmploi);
     $numWaitingEmploi = count($listWaitingEmploi);
 
     // Regie = 6
@@ -92,7 +86,6 @@
     $numRegie = count($listRegie);
     $NumNotTreatRegie = count($listNotTreatRegie);
     $numFinishRegie = count($listFinishRegie);
-    // $numInProgressRegie = count($listInProgressRegie);
     $numWaitingRegie = count($listWaitingRegie);
 
     // Jeunesse = 8
@@ -105,7 +98,6 @@
     $numJeunesse = count($listJeunesse);
     $NumNotTreatJeunesse = count($listNotTreatJeunesse);
     $numFinishJeunesse = count($listFinishJeunesse);
-    // $numInProgressJeunesse = count($listInProgressJeunesse);
     $numWaitingJeunesse = count($listWaitingJeunesse);
 
     // Travaux en Regie = 9
@@ -118,7 +110,6 @@
     $numTravauxRegie = count($listTravauxRegie);
     $NumNotTreatTravauxRegie = count($listNotTreatTravauxRegie);
     $numFinishTravauxRegie = count($listFinishTravauxRegie);
-    // $numInProgressTravauxRegie = count($listInProgressTravauxRegie);
     $numWaitingTravauxRegie = count($listWaitingTravauxRegie);
 
     // EAU = 10
@@ -131,7 +122,6 @@
     $numEau = count($listEau);
     $NumNotTreatEau = count($listNotTreatEau);
     $numFinishEau = count($listFinishEau);
-    // $numInProgressEau = count($listInProgressEau);
     $numWaitingEau = count($listWaitingEau);
 
     // RDV Tavana = 11
@@ -144,10 +134,7 @@
     $numTavana = count($listTavana);
     $NumNotTreatTavana = count($listNotTreatTavana);
     $numFinishTavana = count($listFinishTavana);
-    // $numInProgressTavana = count($listInProgressTavana);
     $numWaitingTavana = count($listWaitingTavana);
-
-
 
     // $numToFinishAdmin = $numFinishAdmin + $numInProgress + $numWaitingAdmin;
     // $toFinishAdmin = $numAdmin - $numToFinishAdmin;
@@ -164,7 +151,12 @@
     // $ToFinishProgress =  100 * $numFinishAdmin;
     // $percent_to_finish_progress =  $ToFinishProgress / $numAdmin;
 
-
+    // date du jours
+    // $today_date = date('d-m-Y h:i:s', time());
+    // $today_date = date('l j F Y, H:i', time());
+    setlocale(LC_TIME, 'fra_fra');
+    $today_date = strftime('%A %d %B %Y');
+    
 
 ?>
 
@@ -188,13 +180,15 @@
         <?php
             session_start();
             if(isset($_GET['deconnexion']))
-            { 
+            {
+
                 if($_GET['deconnexion']==true)
                 {  
                     session_unset();
                     header("location:../login.php");
                     
                 }
+
             }elseif(isset($_SESSION['username'])){
                 $user = $_SESSION['username'];
                 
@@ -205,7 +199,7 @@
                         print '</a>';  
                     print '</li>'; 
                     print '<li class="nav-item">'; 
-                        print '<a class="nav-link" href="admin/admin.php">'; 
+                        print '<a class="nav-link" href="admin.php">'; 
                             print 'Tableau de bord';
                         print '</a>';  
                     print '</li>'; 
@@ -216,7 +210,8 @@
                             print '</span>';
                         print '</a>'; 
                     print '</li>'; 
-                print '</ul>'; 
+                print '</ul>';
+
             }else{  
                 header("location:../login.php");
             }
@@ -236,10 +231,10 @@
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <table class="table">
+                                        <table id="table_to_print" class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"></th>
+                                                    <th scope="col"><?php print $today_date ?></th>
                                                     <th scope="col">Admin</th>
                                                     <th scope="col">Education</th>
                                                     <th scope="col">Voirie</th>
@@ -376,7 +371,7 @@
                                                 </tr> -->
                                                 <tr class="table-warning text-center">
                                                     <th scope="row">
-                                                        En attente
+                                                        Mise en attente
                                                     </th>
                                                     <td>
                                                         <?php
@@ -496,21 +491,13 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <br>
+                                        <button type="button" class="btn btn-outline-primary imprimer">
+                                            Imprimer
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button text-center collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Accordion Item #3
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -519,7 +506,90 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="../asset/divjs.js"></script>
+    <script type="text/javascript" src="../asset/js/myjs.js"></script> -->
+    <script type="text/javascript">
+        $(document).ready(function(){
 
+            $('.imprimer').on('click',function(){
+                // printData();
+                $('#table_to_print').printElement({    
+                    css: 'extend'
+                });
+            })
+
+        }); 
+        (function($){
+	'use strict'
+
+	$.fn.printElement = function(options){
+		let settings = $.extend({
+			title	: jQuery('title').text(),
+			css		: 'extend',
+			ecss	: null,
+			lcss	: [],
+			keepHide: [],
+			wrapper : {
+						wrapper: null,
+						selector: null,
+					}
+		}, options);
+
+		const element = $(this).clone();
+		let html = document.createElement('html');
+
+		let head = document.createElement('head');
+		if(settings.title != null && settings.title != ''){
+			head = $(head).append($(document.createElement('title')).text(settings.title));
+		}
+		else{
+			head = $(head);
+		}
+
+		if(settings.css == 'extend' || settings.css == 'link'){
+			$('link[rel=stylesheet]').each(function(index, linkcss){
+				head = head.append($(document.createElement('link')).attr('href', $(linkcss).attr('href')).attr('rel', 'stylesheet').attr('media', 'print'));
+			})
+		}
+
+		for(var i = 0; i < settings.lcss.length; i++){
+			head = head.append($(document.createElement('link')).attr('href', settings.lcss[i]).attr('rel', 'stylesheet').attr('media', 'print'));
+		}
+
+		if(settings.css == 'extend' || settings.css == 'style'){
+			head.append($(document.createElement('style')).append($('style').clone().html()));
+		}
+
+		if(settings.ecss != null){
+			head.append($(document.createElement('style')).html(settings.ecss));
+		}
+
+		if (settings.wrapper.wrapper === null){
+			var body = document.createElement('body');
+			body = $(body).append(element);
+		}
+		else{
+			var body = $(settings.wrapper.wrapper).clone();
+			body.find(settings.wrapper.selector).append(element);
+		}
+
+		for(let i = 0; i < settings.keepHide.length; i++){
+			$(body).find(settings.keepHide[i]).each(function(index, data){
+				$(this).css('display', 'none');
+			})
+		}
+
+		html = $(html).append(head).append(body);
+
+		const fn_window = document.open('', settings.title, 'width='+$(document).width()+',height=' + $(document).width() + '');
+		fn_window.document.write(html.clone().html());
+		setTimeout(function(){fn_window.print();fn_window.close()}, 250);
+
+		return $(this);
+	}
+}(jQuery));
+    </script>
 </body>
 </html>
 

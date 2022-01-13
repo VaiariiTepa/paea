@@ -21,22 +21,23 @@
     
     if (isset($_POST['btn-terminer'])) {
         if(isset($_POST['accord_accepter'])) {
-            $accord_accepter = 1;
+            $accord = 1;
             $rowid_demande = $_POST['rowid_demande'];
             $note_statut = $_POST['note_statut'];
-            $paea->terminerDemande($rowid_demande,$accord_accepter,$note_statut);
-        }elseif(isset($_POST['accord_refuser'])){
-            $accord_refuser = 0;
+            $paea->terminerDemande($rowid_demande,$accord,$note_statut);
+        }else{
+            $accord = 0;
             $note_statut = $_POST['note_statut'];
             $rowid_demande = $_POST['rowid_demande'];
-            $paea->terminerDemande($rowid_demande,$accord_refuser,$note_statut);
+            $paea->terminerDemande($rowid_demande,$accord,$note_statut);
         }
         
     }
     
     $t_listDemandes = $paea->getNewDemande();
 
-    $today_date = date('d-m-Y h:i:s', time());
+
+    // $today_date = date('d-m-Y h:i:s', time());
     // echo $date;
 
     // date('d-m-Y H:i:s', strtotime($v_demande['date_demande']));
@@ -58,8 +59,6 @@
 </head>
 <body>
     <div id="content">    
-        <a href='services.php?deconnexion=true'><span>Déconnexion</span></a>
-        
         <!-- tester si l'utilisateur est connecté -->
         <?php
             session_start();
@@ -74,14 +73,38 @@
             }elseif(isset($_SESSION['username']))
             {
                 $user = $_SESSION['username'];
-                // afficher un message
-                echo "<br>Ia'ora na ".$user.", vous êtes connectés";
-                print '<div class="container-fluid mt-2">
+
+                                
+                print '<ul class="nav justify-content-center">';   
+                    // afficher un message
+                    print '<li class="nav-item text-center">'; 
+                        print '<a class="nav-link active">';  
+                            print "Ia'ora na ".$user." ! :D";
+                        print '</a>';  
+                    print '</li>';
+                    print '<li class="nav-item">';
+                        print '<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop"">';
+                            print '<span>';
+                                print 'Demande terminées';
+                            print '</span>';
+                        print '</a>'; 
+                    print '</li>'; 
+                    print '<li class="nav-item">'; 
+                        print '<a class="nav-link" href="services.php?deconnexion=true">';
+                            print '<span>';
+                                print 'Déconnexion';
+                            print '</span>';
+                        print '</a>'; 
+                    print '</li>'; 
+                print '</ul>'; 
+                
+
+                print '<div class="">
                     <div class="row ">
-                        <!-- gauche -->
                         <div class="col-md-12">
+                            <!-- gauche -->
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="card m-4">
                                         <div class="card-header">
                                             Nouvelles demandes
@@ -95,7 +118,7 @@
                                     </div>
                                 </div>
                                 <!-- droite -->
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     <div class="card m-4">
                                         <div class="card-header text-center">
                                             En cours
@@ -107,12 +130,12 @@
                                                         <th >Nom Prénom</th>
                                                         <th scope="col">Téléphone/Date de naissance</th>
                                                         <th scope="col">Services</th>
-                                                        <th scope="col">Remarque</th>
+                                                        <th scope="col">Obj. demande</th>
                                                         <th scope="col">Date de la demande</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>';
-                                                        if (isset($t_listDemandes)) {
+                                                        if(isset($t_listDemandes)){
                                                             foreach ($t_listDemandes as $v_demande){
                                                                 if(($v_demande['traitement_id'] == 1) && ($v_demande['name_directeur'] == $user)){
                                                                     print' <tr>';
@@ -136,7 +159,7 @@
                                                                 print '<div class="row mb-3">';
                                                                     print '<div class="col-md-9">';
                                                                         print '<form method="post" action="services.php">';
-                                                                            print '<input type="text" name="note" class="form-control" placeholder="Note, mise en attente">';
+                                                                            print '<input type="text" name="note" class="form-control" placeholder="Note si mise en attente de la demande">';
                                                                         print '</div>';
                                                                     print '<div class="col-md-3">';
                                                                         print '<div class="row">';
@@ -149,11 +172,35 @@
                                                                 print '<div class="row">';
                                                                     print '<div class="col-md-12">';
                                                                         print '<form method="post" action="services.php">';
-                                                                            print '<input name="accord_accepter" value="1" type="radio">Accord</input>';
-                                                                            print '<input name="accord_refuser" value="0" type="radio">Non</input>';
-                                                                            print '<input type="text" name="note_statut" placeholder="commentaire">';
-                                                                            print '<input type="hidden" name="rowid_demande" value="'.$v_demande['rowid_demande'].'" require>';
-                                                                            print '<button type="submit" name="btn-terminer" class="btn btn-outline-success w-100">Terminer</button>';
+                                                                            print '<hr class="m-4">';
+                                                                            print '<div class="row">';
+                                                                                print '<div class="col-md-4">';
+                                                                                    print '<div class="form-check">';
+                                                                                        print '<input name="accord_accepter" value="1"class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">';
+                                                                                        print '<label class="form-check-label" for="flexRadioDefault1">';
+                                                                                            print 'Accordé';
+                                                                                        print '</label>';
+                                                                                    print '</div>';
+                                                                                print '</div>';
+                                                                                print '<div class="col-md-4">';
+                                                                                    print '<div class="form-check">';
+                                                                                        print '<input name="accord_refuser" value="0"class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">';
+                                                                                        print '<label class="form-check-label" for="flexRadioDefault1">';
+                                                                                            print 'Refusé';
+                                                                                        print '</label>';
+                                                                                    print '</div>';
+                                                                                print '</div>';
+                                                                            print '</div>';
+                                                                            
+                                                                            print '<div class="row mb-2">';
+                                                                                print '<div class="col-md-9">';
+                                                                                    print '<input class="form-control" type="text" name="note_statut" placeholder="commentaire">';                                                                            
+                                                                                print '</div>';
+                                                                                print '<div class="col-md-3">';
+                                                                                    print '<input type="hidden" name="rowid_demande" value="'.$v_demande['rowid_demande'].'" require>';                                                                            
+                                                                                    print '<button type="submit" name="btn-terminer" class="btn btn-outline-success">Terminer</button>';
+                                                                                print '</div>';
+                                                                            print '</div>';
                                                                         print '</form>';
                                                                     print '</div>';
                                                                 print '</div>';
@@ -167,7 +214,7 @@
                                     </div>
                                     <div class="card m-4">
                                         <div class="card-header text-center">
-                                            En attente /!\
+                                            Demandes mis en attente
                                         </div>
                                         <ul class="list-group list-group-flush">
                                             
@@ -181,10 +228,10 @@
                                                             Téléphone / date de naissance
                                                         </th>
                                                         <th scope="col">
-                                                            Service
+                                                            Obj. demande
                                                         </th>
                                                         <th scope="col">
-                                                            Remarque
+                                                            Note
                                                         </th>
                                                         <th scope="col">
                                                             Date de la demande
@@ -203,13 +250,13 @@
                                                                         print $v_demande['nom'].' '.$v_demande['prenom'];
                                                                     print' </td>';
                                                                     print' <td>';
-                                                                        print $v_demande['tel'].' / '.$v_demande['birthday'];
-                                                                    print' </td>';
-                                                                    print' <td>';
-                                                                        print $v_demande['nom_service'];
+                                                                        print $v_demande['tel'].' / '.date('d-m-Y', strtotime($v_demande['birthday']));
                                                                     print' </td>';
                                                                     print' <td>';
                                                                         print $v_demande['remarque'];
+                                                                    print' </td>';
+                                                                    print' <td>';
+                                                                        print $v_demande['note_attente'];
                                                                     print' </td>';
                                                                     print' <td>';
                                                                         print date('d-m-Y', strtotime($v_demande['date_demande']));
@@ -220,10 +267,6 @@
                                                                         print '<button type="submit" name="btn-reception" class="btn btn-outline-warning">Reprendre</button>';
                                                                     print '</form>';
                                                                 print' </tr>';
-            
-                                                                print '<li class="list-group-item">';
-                                                                    print $v_demande['note'];
-                                                                print '</li>';
                                                                         
                                                             }
                                                             
@@ -234,17 +277,13 @@
                                         </ul>
                                     </div>
                                     
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-outline-info m-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                    Liste des demandes terminées
-                                    </button>
             
                                     <!-- Modal -->
                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">TERMINER</h5>
+                                        <div class="modal-header text-center">
+                                            <h6 class="modal-title" id="staticBackdropLabel">Liste des demandes terminées</h6>
                                             <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                                         </div>
@@ -262,16 +301,30 @@
                                                             Service
                                                         </th>
                                                         <th scope="col">
-                                                            Remarque
+                                                            Obj. demande
+                                                        </th>
+                                                        <th scope="col">
+                                                            Statut demande
+                                                        </th>
+                                                        <th scope="col">
+                                                            Commentaire
                                                         </th>
                                                         <th scope="col">
                                                             Date de la demande
+                                                        </th>
+                                                        <th scope="col">
+                                                            Date demande terminer
                                                         </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>';
                                                         foreach($t_listDemandes as $v_demande) {
-            
+                                                            if($v_demande['statut_demande'] == 1){
+                                                                $statut_demande = "Accordé";
+                                                            }else{
+                                                                $statut_demande = "Refusé";
+                                                            }
+                                                            
                                                             if (($v_demande['traitement_id'] == 3) && ($v_demande['name_directeur'] == $user)) {
                                                                 print' <tr>';
                                                                     print' <td>';
@@ -287,7 +340,16 @@
                                                                         print $v_demande['remarque'];
                                                                     print' </td>';
                                                                     print' <td>';
+                                                                        print $statut_demande;
+                                                                    print' </td>';
+                                                                    print' <td>';
+                                                                        print $v_demande['note_statut'];
+                                                                    print' </td>';
+                                                                    print' <td>';
                                                                         print date('d-m-Y H:i:s', strtotime($v_demande['date_demande']));
+                                                                    print' </td>';
+                                                                    print' <td>';
+                                                                        print date('d-m-Y H:i:s', strtotime($v_demande['date_finish']));
                                                                     print' </td>';
                                                                 print' </tr>';
                                                                         
