@@ -153,10 +153,10 @@
 
     // date du jours
     // $today_date = date('d-m-Y h:i:s', time());
-    // $today_date = date('l j F Y, H:i', time());
+
+    // var_dump($print_date);
     setlocale(LC_TIME, 'fra_fra');
     $today_date = strftime('%A %d %B %Y');
-    
 
 ?>
 
@@ -192,7 +192,14 @@
             }elseif(isset($_SESSION['username'])){
                 $user = $_SESSION['username'];
                 
-                print '<ul class="nav justify-content-center">';   
+                print '<ul class="nav justify-content-center">';
+                    print '<li class="nav-item">'; 
+                        print '<a class="nav-link" href="admin.php?deconnexion=true">';
+                            print '<span>';
+                                print 'Déconnexion';
+                            print '</span>';
+                        print '</a>'; 
+                    print '</li>';    
                     print '<li class="nav-item">'; 
                         print '<a class="nav-link active" aria-current="page" href="../index.php">';  
                             print 'Demande';
@@ -203,13 +210,13 @@
                             print 'Tableau de bord';
                         print '</a>';  
                     print '</li>'; 
-                    print '<li class="nav-item">'; 
-                        print '<a class="nav-link" href="admin.php?deconnexion=true">';
-                            print '<span>';
-                                print 'Déconnexion';
-                            print '</span>';
-                        print '</a>'; 
-                    print '</li>'; 
+                    print '<li>';
+                    print '<form class="d-flex" method="post" action="../search.php">';
+                        print '<input class="form-control me-2" type="text" name="nom" placeholder="Nom" aria-label="Search">';
+                        print '<input class="form-control me-2" type="text" name="prenom" placeholder="Prénom" aria-label="Search">';
+                        print '<button class="btn btn-outline-success btn-sm" name="btn-search" type="submit">Rechercher</button>';
+                    print '</form>';
+                    print '</li>';
                 print '</ul>';
 
             }else{  
@@ -234,18 +241,65 @@
                                         <table id="table_to_print" class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"><?php print $today_date ?></th>
-                                                    <th scope="col">Admin</th>
-                                                    <th scope="col">Education</th>
-                                                    <th scope="col">Voirie</th>
-                                                    <th scope="col">Police</th>
-                                                    <th scope="col">Pompier</th>
-                                                    <th scope="col">Emplois</th>
-                                                    <th scope="col">Regie</th>
-                                                    <th scope="col">Jeunesse</th>
-                                                    <th scope="col">Trav.Régie</th>
-                                                    <th scope="col">Eau</th>
-                                                    <th scope="col">rdv Tavana</th>
+                                                    <!-- <th scope="col"><?php print $today_date ?></th> -->
+                                                    <th scope="col"></th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Raiteata&service_type=7">
+                                                            Guichet unique
+                                                        </a>
+                                                    </th>
+
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Vaianu&service_type=1">
+                                                            Education
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Pascal&service_type=2">
+                                                            Voirie
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Tamara&service_type=3">
+                                                            Police
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Tamara&service_type=4">
+                                                            
+                                                            Pompier
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Vaianu&service_type=5">
+                                                            Emplois
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Raiteata&service_type=6">
+                                                            Regie
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Vaianu&service_type=8">                                                        
+                                                            Jeunesse
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Ranitea&service_type=9">                                                        
+                                                            Trav.Régie
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Pascal&service_type=12">                                                        
+                                                            Eau
+                                                        </a>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <a href="../resum_service.php?name_dir=Antony&service_type=13">    
+                                                            Tavana
+                                                        </a>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -309,9 +363,9 @@
                                                         ?>
                                                     </td>
                                                 </tr>
-                                                <!-- <tr class="table-danger text-center">
+                                                <tr class="table-danger text-center">
                                                     <th scope="row">
-                                                        Non traiter
+                                                        Non traitée
                                                     </th>
                                                     <td>
                                                         <?php
@@ -368,10 +422,10 @@
                                                             print $NumNotTreatTavana;
                                                         ?>
                                                     </td>
-                                                </tr> -->
+                                                </tr>
                                                 <tr class="table-warning text-center">
                                                     <th scope="row">
-                                                        Mise en attente
+                                                        En cours de traitement
                                                     </th>
                                                     <td>
                                                         <?php
@@ -431,7 +485,7 @@
                                                 </tr>
                                                 <tr class="table-success text-center">
                                                     <th scope="row">
-                                                        Terminer
+                                                    Traitement terminé
                                                     </th>
                                                     <td>
                                                         <?php 
@@ -520,75 +574,76 @@
             })
 
         }); 
+
         (function($){
-	'use strict'
+            'use strict'
 
-	$.fn.printElement = function(options){
-		let settings = $.extend({
-			title	: jQuery('title').text(),
-			css		: 'extend',
-			ecss	: null,
-			lcss	: [],
-			keepHide: [],
-			wrapper : {
-						wrapper: null,
-						selector: null,
-					}
-		}, options);
+            $.fn.printElement = function(options){
+                let settings = $.extend({
+                    title	: jQuery('title').text(),
+                    css		: 'extend',
+                    ecss	: null,
+                    lcss	: [],
+                    keepHide: [],
+                    wrapper : {
+                                wrapper: null,
+                                selector: null,
+                            }
+                }, options);
 
-		const element = $(this).clone();
-		let html = document.createElement('html');
+                const element = $(this).clone();
+                let html = document.createElement('html');
 
-		let head = document.createElement('head');
-		if(settings.title != null && settings.title != ''){
-			head = $(head).append($(document.createElement('title')).text(settings.title));
-		}
-		else{
-			head = $(head);
-		}
+                let head = document.createElement('head');
+                if(settings.title != null && settings.title != ''){
+                    head = $(head).append($(document.createElement('title')).text(settings.title));
+                }
+                else{
+                    head = $(head);
+                }
 
-		if(settings.css == 'extend' || settings.css == 'link'){
-			$('link[rel=stylesheet]').each(function(index, linkcss){
-				head = head.append($(document.createElement('link')).attr('href', $(linkcss).attr('href')).attr('rel', 'stylesheet').attr('media', 'print'));
-			})
-		}
+                if(settings.css == 'extend' || settings.css == 'link'){
+                    $('link[rel=stylesheet]').each(function(index, linkcss){
+                        head = head.append($(document.createElement('link')).attr('href', $(linkcss).attr('href')).attr('rel', 'stylesheet').attr('media', 'print'));
+                    })
+                }
 
-		for(var i = 0; i < settings.lcss.length; i++){
-			head = head.append($(document.createElement('link')).attr('href', settings.lcss[i]).attr('rel', 'stylesheet').attr('media', 'print'));
-		}
+                for(var i = 0; i < settings.lcss.length; i++){
+                    head = head.append($(document.createElement('link')).attr('href', settings.lcss[i]).attr('rel', 'stylesheet').attr('media', 'print'));
+                }
 
-		if(settings.css == 'extend' || settings.css == 'style'){
-			head.append($(document.createElement('style')).append($('style').clone().html()));
-		}
+                if(settings.css == 'extend' || settings.css == 'style'){
+                    head.append($(document.createElement('style')).append($('style').clone().html()));
+                }
 
-		if(settings.ecss != null){
-			head.append($(document.createElement('style')).html(settings.ecss));
-		}
+                if(settings.ecss != null){
+                    head.append($(document.createElement('style')).html(settings.ecss));
+                }
 
-		if (settings.wrapper.wrapper === null){
-			var body = document.createElement('body');
-			body = $(body).append(element);
-		}
-		else{
-			var body = $(settings.wrapper.wrapper).clone();
-			body.find(settings.wrapper.selector).append(element);
-		}
+                if (settings.wrapper.wrapper === null){
+                    var body = document.createElement('body');
+                    body = $(body).append(element);
+                }
+                else{
+                    var body = $(settings.wrapper.wrapper).clone();
+                    body.find(settings.wrapper.selector).append(element);
+                }
 
-		for(let i = 0; i < settings.keepHide.length; i++){
-			$(body).find(settings.keepHide[i]).each(function(index, data){
-				$(this).css('display', 'none');
-			})
-		}
+                for(let i = 0; i < settings.keepHide.length; i++){
+                    $(body).find(settings.keepHide[i]).each(function(index, data){
+                        $(this).css('display', 'none');
+                    })
+                }
 
-		html = $(html).append(head).append(body);
+                html = $(html).append(head).append(body);
 
-		const fn_window = document.open('', settings.title, 'width='+$(document).width()+',height=' + $(document).width() + '');
-		fn_window.document.write(html.clone().html());
-		setTimeout(function(){fn_window.print();fn_window.close()}, 250);
+                const fn_window = document.open('', settings.title, 'width='+$(document).width()+',height=' + $(document).width() + '');
+                fn_window.document.write(html.clone().html());
+                setTimeout(function(){fn_window.print();fn_window.close()}, 250);
 
-		return $(this);
-	}
-}(jQuery));
+                return $(this);
+            }
+        }(jQuery));
     </script>
 </body>
 </html>

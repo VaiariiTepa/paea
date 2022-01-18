@@ -5,7 +5,6 @@
     $demande = new demande();
     $t_listDemande = $demande->getNewDemande();
     session_start();
-    // var_dump($_SESSION['username']) ;
     foreach ($t_listDemande as $v_demande){
         if (isset($v_demande['traitement_id'])) {
             if (($v_demande['traitement_id'] == 0) && ($v_demande['name_directeur'] == $_SESSION['username'] )) {

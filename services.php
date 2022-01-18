@@ -4,6 +4,8 @@
 
     $paea = new paea();
     
+
+
     if (isset($_POST['btn-reception'])) {
 
         $rowid_demande = $_POST['rowid_demande'];
@@ -72,14 +74,20 @@
                 }
             }elseif(isset($_SESSION['username']))
             {
-                $user = $_SESSION['username'];
+                if(isset($_GET['name_dir'])){
+
+                    $user = $_GET['name_dir'];
+            
+                }else{
+                    $user = $_SESSION['username'];
+                }
 
                                 
                 print '<ul class="nav justify-content-center">';   
                     // afficher un message
                     print '<li class="nav-item text-center">'; 
                         print '<a class="nav-link active">';  
-                            print "Ia'ora na ".$user." ! :D";
+                            print "Ia'ora na ".$user." !";
                         print '</a>';  
                     print '</li>';
                     print '<li class="nav-item">';
@@ -93,6 +101,13 @@
                         print '<a class="nav-link" href="services.php?deconnexion=true">';
                             print '<span>';
                                 print 'Déconnexion';
+                            print '</span>';
+                        print '</a>'; 
+                    print '</li>'; 
+                    print '<li class="nav-item">'; 
+                        print '<a class="nav-link" href="search_by_service.php">';
+                            print '<span>';
+                                print 'Recherche';
                             print '</span>';
                         print '</a>'; 
                     print '</li>'; 

@@ -34,7 +34,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE s.rowid = ".$service_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE s.rowid = ".$service_id;
         $result = $mysqli->query($requete);
         
         foreach ($result as $row){
@@ -58,7 +58,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 7 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 7 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -66,6 +66,8 @@ class service
                 $t_service[] = $row;
             }
         }
+
+
 
         return $t_service;
     }
@@ -81,7 +83,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 1 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 1 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -105,7 +107,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 2 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 2 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -128,7 +130,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 3 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 3 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -152,7 +154,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 4 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 4 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -175,7 +177,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 5 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 5 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -198,7 +200,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 6 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 6 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -221,7 +223,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 8 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 8 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -244,7 +246,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 9 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 9 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -267,7 +269,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 12 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 12 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -290,7 +292,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 13 AND d.traitement_id = ".$traitement_id;
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE d.fk_service_id = 13 AND d.traitement_id = ".$traitement_id;
         
         $result = $mysqli->query($requete);
         if ($result) {
@@ -311,7 +313,7 @@ class service
         global $mysqli;
         $t_service = array();
         
-        $requete = "SELECT *, s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE s.rowid = 2";
+        $requete = "SELECT *,d.rowid as 'id', s.name as 'nom_service', d.date as 'date_demande' , d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid WHERE s.rowid = 2";
         $result = $mysqli->query($requete);
         
         foreach ($result as $row){

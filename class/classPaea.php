@@ -60,6 +60,48 @@ class paea
         return $t_demande;
     }
 
+    /**
+     * Get Last Demande
+     *
+     * @return $t_demande
+     */
+    function getLastDemande(){
+        global $mysqli;
+        $t_demande = array();
+
+        $request = "SELECT *, s.name as 'nom_service',d.date as 'date_demande' ,d.rowid as 'rowid_demande' FROM `demandes` as d LEFT JOIN `habitants` as h on d.fk_habitant_id = h.rowid LEFT JOIN `services` as s on d.fk_service_id = s.rowid  ORDER BY d.rowid DESC LIMIT 1";
+        
+        $result = $mysqli->query($request);
+        
+        foreach ($result as $row){
+
+            $t_demande['nom'] = $row['nom'];
+            $t_demande['prenom'] = $row['prenom'];
+            $t_demande['tel'] = $row['tel'];
+            $t_demande['mail'] = $row['mail'];
+            $t_demande['birthday'] = $row['birthday'];
+            $t_demande['birthday_place'] = $row['birthday_place'];
+            $t_demande['adresse'] = $row['adresse'];
+            $t_demande['quartier'] = $row['quartier'];
+            $t_demande['servitude'] = $row['servitude'];
+            $t_demande['lot'] = $row['lot'];
+            $t_demande['nom_service'] = $row['nom_service'];
+            $t_demande['super_admin'] = $row['super_admin'];
+            $t_demande['rowid_demande'] = $row['rowid_demande'];
+            $t_demande['remarque'] = $row['remarque'];
+            $t_demande['date_demande'] = $row['date_demande'];
+
+        }
+
+        return $t_demande;
+    }
+
+    /**
+     * Get demande en attente
+     *
+     * @param [type] $rowid_demande
+     * @return void
+     */
     function getAttenteDemande($rowid_demande){
         global $mysqli;
         $t_demande = array();
@@ -101,13 +143,23 @@ class paea
      * @param [type] $lot
      * 
      */
-    function newHabitant($nom,$prenom,$birthday,$tel,$mail,$adresse,$quartier,$servitude,$lot,)
+    function newHabitant($nom,$prenom,$birthday,$birthday_place,$tel,$mail,$adresse,$quartier,$servitude,$lot,)
     {
         global $mysqli;
         
-        $request = "INSERT INTO `habitants`(`nom`, `prenom`, `birthday`, `tel`, `mail`, `adresse`, `quartier`, `servitude`, `lot`)";
+        $echape = array("'");
+        
+        $nom = str_replace($echape, "\'",$nom);
+        $prenom = str_replace($echape, "\'",$prenom);
+        $birthday_place = str_replace($echape, "\'",$birthday_place);
+        $adresse = str_replace($echape, "\'",$adresse);
+        $quartier = str_replace($echape, "\'",$quartier);
+        $servitude = str_replace($echape, "\'",$servitude);
+
+
+        $request = "INSERT INTO `habitants`(`nom`, `prenom`, `birthday`,`birthday_place`, `tel`, `mail`,`adresse`, `quartier`, `servitude`, `lot`)";
         $request.= "VALUES";
-        $request.= "('".$nom."','".$prenom."','".$birthday."','".$tel."','".$mail."','".$adresse."','".$quartier."','".$servitude."','".$lot."')";
+        $request.= "('".$nom."','".$prenom."','".$birthday."','".$birthday_place."','".$tel."','".$mail."','".$adresse."','".$quartier."','".$servitude."','".$lot."')";
         
         $mysqli->query($request);
         
@@ -125,13 +177,16 @@ class paea
     function newDemande($LastHabitantId,$serviceId,$remarque,$traitement,$super_admin)
     {
         global $mysqli;
+
+        $echape = array("'");
+        $remarque_echape = str_replace($echape, "\'",$remarque);
         
         
         $request = "INSERT INTO `demandes`(`fk_habitant_id`, `fk_service_id`, `remarque`, `traitement_id`,`super_admin`)"; 
         $request.= " VALUES";
         $request.= " ('".$LastHabitantId."'";
         $request.= ",'".$serviceId."'";
-        $request.= ",'".$remarque."'";
+        $request.= ",'".$remarque_echape."'";
         $request.= ",'".$traitement."'";
         $request.= ",'".$super_admin."')";
         $result = $mysqli->query($request);
@@ -160,6 +215,9 @@ class paea
     {
         global $mysqli;
 
+        $echape = array("'");
+        
+        $note = str_replace($echape, "\'",$note);
         
         $request = "INSERT INTO `notes`(`fk_demande_id`, `note`) VALUES ('".$rowid_demande."','".$note."')";
         $result = $mysqli->query($request);
@@ -200,6 +258,11 @@ class paea
     function attenteDemande($rowid_demande,$note)
     {
         global $mysqli;
+
+        $echape = array("'");
+        
+        $note = str_replace($echape, "\'",$note);
+        
         
         $requete = 'UPDATE demandes SET traitement_id=2 , note_attente="'.$note.'"  WHERE rowid=' . $rowid_demande;
         $result = $mysqli->query($requete);
@@ -216,6 +279,10 @@ class paea
     function terminerDemande($rowid_demande,$statut_demande,$note)
     {
         global $mysqli;
+        
+        $echape = array("'");
+        
+        $note = str_replace($echape, "\'",$note);
         
         $requete = 'UPDATE demandes SET traitement_id=3 ,statut_demande='.$statut_demande.' , note_statut="'.$note.'"  WHERE rowid=' . $rowid_demande;
         
