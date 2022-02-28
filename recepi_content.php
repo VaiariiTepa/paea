@@ -43,7 +43,10 @@
                             </p>
                             <hr>
                             <p>
-                                Demande enregistré par: <strong><?php print $lastDemande['super_admin'] ?></strong>
+                                Demande enregistré par: 
+                                <strong>
+                                    <?php print $lastDemande['super_admin'] ?>
+                                </strong>
                             </p>
                         </div>
                     </div>

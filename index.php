@@ -160,6 +160,9 @@
                                             print '</div>
                                                 </div>      
                                                 <div class="col-md-6">
+                                                <select class="form-select add_service" aria-label="Default select example">
+                                                    
+                                                </select>
                                                     <!-- commentaire -->
                                                     <div class="row mb-2">
                                                         <div class="col-12">
@@ -210,6 +213,47 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="asset/js/jquery-3.6.0.min.js"></script>
+    <script  async type="text/javascript">
 
+        $(document).ready(function(){
+            // c'est ici que je vais écrire le code JQuery de ma page
+            $('.btn-check').click(function(){
+                var service = $(this).val();
+                
+                generer_ajax(service);
+            });
+
+        });
+        
+        //AJAX
+        function generer_ajax(service_id){
+            $.ajax({
+                type:"POST",
+                url:"ajax.php",
+                dataType:"json",
+                data: {
+                    'service_id': service_id
+                },
+                'success': function(data){
+                    showData(data);
+                },
+                'error': function(){
+                    alert('erreur');
+                }
+            });
+        }
+
+        function showData(data){
+            // each(data, function(idx,el){
+            //     console.log(el);    
+            // });
+            $('.add_service').empty();
+            data.forEach(el => 
+        
+                $('.add_service').append("<option selected>"+el+"</option>")
+            );
+        }
+    </script>
 </body>
 </html>

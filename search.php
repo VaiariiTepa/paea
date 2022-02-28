@@ -89,9 +89,9 @@
                                 <?php
                                     if (isset($t_listDemande)) {
                                         foreach($t_listDemande as $v_search){
-                                            if($v_NotTreat['statut_demande'] == 1){
+                                            if($v_search['statut_demande'] == 1){
                                                 $status = 'Accorder';
-                                            }elseif($v_NotTreat['statut_demande'] == Null){
+                                            }elseif($v_search['statut_demande'] == Null){
                                                 $status = 'En attente de traitement';
                                             }else{
                                                 $status = 'Refusé';

@@ -130,14 +130,14 @@
         $user = $_SESSION['username'];
         print '<ul class="nav justify-content-center">';
             print '<li class="nav-item">'; 
-                print '<a class="nav-link" href="admin.php?deconnexion=true">';
+                print '<a class="nav-link" href="resum_service.php?deconnexion=true">';
                     print '<span>';
                         print 'Déconnexion';
                     print '</span>';
                 print '</a>'; 
             print '</li>';    
             print '<li class="nav-item">'; 
-                print '<a class="nav-link active" aria-current="page" href="../index.php">';  
+                print '<a class="nav-link active" aria-current="page" href="index.php">';  
                     print 'Demande';
                 print '</a>';  
             print '</li>'; 

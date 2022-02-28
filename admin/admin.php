@@ -158,6 +158,23 @@
     setlocale(LC_TIME, 'fra_fra');
     $today_date = strftime('%A %d %B %Y');
 
+    
+    if (isset($_POST['btn-creer'])) {
+        $service_id = $_POST['service_id'];
+        $service_type = $_POST['service_type'];
+        $service->setServiceType($service_id,$service_type);
+    }
+    
+    // liste des service
+    $t_listService = $paea->getService();
+
+    // liste des types de service
+    $t_listServiceType = $service->getServiceType();
+
+    // echo '<pre>'; 
+    // print_r($t_listServiceType); 
+    // echo '</pre>'; 
+
 ?>
 
 <!DOCTYPE html>
@@ -549,6 +566,271 @@
                                         <button type="button" class="btn btn-outline-primary imprimer">
                                             Imprimer
                                         </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingtwo">
+                                <button class="accordion-button text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    Gestion type de services
+                                </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingtwo data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+
+                                        <form method="post" action="admin.php">
+                                            <div class="mb-3">
+                                                <div class="form-group">
+                                                  <label for="nomservice">Choisir un service</label>
+                                                  <select class="form-control" name="service_id" id="nomservice">
+                                                    <?php
+                                                        foreach ($t_listService as $v_service){
+                                                            print '<option value="'.$v_service['rowid'].'">';
+                                                                print $v_service['name'];
+                                                            print '</option>';
+                                                        }
+                                                    ?>
+                                                  </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="service_type" class="form-label">
+                                                    Type de service
+                                                </label>
+                                                <input type="text" name="service_type" class="form-control" id="service_type">
+                                            </div>
+                                            <button type="submit" name="btn-creer" class="btn btn-primary">
+                                                Créer
+                                            </button>
+                                        </form>
+                                        <br>
+                                        <div class="row d-flex flex-wrap">
+                                            <!-- Eau -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Eau';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                foreach ($t_listServiceType['Eau']['service_type'] as $eau){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $eau;
+                                                                        print '</li>';
+                                                                    }
+                                                                    print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Voirie -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Voirie';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Voirie']['service_type'] as $voirie){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $voirie;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Education -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Education';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Education']['service_type'] as $education){   
+                                                                            print '<li class="list-group-item">';
+                                                                                print $education;
+                                                                            print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Pompier -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Pompier';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Pompier']['service_type'] as $pompier){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $pompier;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Emplois -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Emplois';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Emplois']['service_type'] as $emploi){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $emploi;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Regie -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Régie';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Régie']['service_type'] as $regie){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $regie;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Guichet unique -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Guichet unique';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Guichet_unique']['service_type'] as $guichetUnique){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $guichetUnique;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Guichet unique -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Jeunesse et sport';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['JeunesseEtSport']['service_type'] as $jeunesse){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $jeunesse;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Travaux en régie -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Travaux en régie';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['TravauxRegie']['service_type'] as $travauxRegie){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $travauxRegie;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Tavana -->
+                                            <div class="col-md-3 m-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            print '<h5 class="card-title text-center">';
+                                                                print 'Tavana';
+                                                            print '</h5>';
+                                                            print '<p class="card-text">';
+                                                                print '<ul class="list-group">';
+                                                                    foreach ($t_listServiceType['Tavana']['service_type'] as $tavana){   
+                                                                        print '<li class="list-group-item">';
+                                                                            print $tavana;
+                                                                        print '</li>';
+                                                                    }
+                                                                print '</ul>';
+                                                            print '</p>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
